@@ -28,4 +28,13 @@ describe('Example tests', () => {
     cy.get('.alert-success').should('be.visible')
     cy.contains('Home').should('be.visible').click()
   })
+
+  it.only('Navigate to contact us form', () => {
+    cy.get('a[href*="contact"]').should('be.visible').click()
+    cy.url().should('contain', 'contact_us')
+    cy.contains('h2', 'contact us', { matchCase: false }).should('be.visible')
+    cy.get('div.bg').find('h2').contains('contact us', { matchCase: false })
+    cy.get('h2').first().should('be.visible') //Contact us element
+    cy.get('h2').eq(1).should('be.visible') // Get in touch element
+  })
 })

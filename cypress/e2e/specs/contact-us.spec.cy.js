@@ -12,6 +12,27 @@ describe('Contact us tests', () => {
     cy.get('h2').eq(1).should('be.visible') // Get in touch element
   })
 
+  it.only('Send message through contact us form without email insterted', () => {
+    // When
+    cy.get('a[href*="contact"]').should('be.visible').click()
+
+    // Then
+    cy.url().should('contain', 'contact_us')
+
+    // When
+    cy.get('[data-qa="name"]').should('be.visible').clear().type('Muhamed')
+    cy.get('[data-qa="subject"]').should('be.visible').clear().type('Something')
+    cy.get('[data-qa="message"]').should('be.visible').clear().type('Message')
+
+    // And
+    cy.get('[data-qa="submit-button"]').should('be.enabled').click()
+
+    // Then
+    cy.get('[data-qa="email"]')
+      .invoke('prop', 'validationMessage')
+      .should('eq', 'Please fill out this field.')
+  })
+
   it('Send message trough contact us form', () => {
     // When
     cy.get('a[href*="contact"]').should('be.visible').click()
